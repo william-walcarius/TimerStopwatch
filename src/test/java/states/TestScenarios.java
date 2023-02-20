@@ -93,4 +93,26 @@ public class TestScenarios {
 	  assertEquals("value of timer ", 0, AbstractTimer.getTimer());	 	  
 	  }
 
+	  // Scenario to test the up() of the LaptimeStopwatch
+	// And the right() of the RunningStopwatch
+	  @Test
+	public void upLaptimeScenario(){
+		assertEquals(IdleTimer.Instance(),c.currentState);
+		c.left(); // go to stopwatch mode
+		c.tick();
+		assertSame(ResetStopwatch.Instance(), c.currentState);
+		c.up(); // start stopwatch
+		c.tick();
+		assertSame(RunningStopwatch.Instance(), c.currentState);
+		c.up(); // record stopwatch laptime
+		c.tick();
+		assertSame(LaptimeStopwatch.Instance(), c.currentState);
+		c.up(); // go back to the running state
+		c.tick();
+		assertSame(RunningStopwatch.Instance(), c.currentState);
+		c.right(); // go back to the reset state
+		c.tick();
+		assertSame(ResetStopwatch.Instance(), c.currentState);
+	}
+
 }
